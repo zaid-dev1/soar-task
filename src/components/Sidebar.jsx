@@ -23,14 +23,10 @@ const menuItems = [
   { icon: <FaCog size={20} />, label: "Setting", path: "/settings" },
 ];
 
-
 import { IoClose } from "react-icons/io5";
 const Sidebar = ({ isOpen, onClose }) => {
   return (
-    //   <div
-    //     className={`fixed top-0 left-0 w-64 h-screen bg-white shadow-md z-50 transform transition-transform duration-300
-    // ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
-    //   >
+   
     <div
       className={`fixed top-0 left-0 w-64 h-screen bg-white shadow-md z-50 transform transition-transform duration-300
     ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
@@ -51,7 +47,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           <NavLink
             key={index}
             to={item.path}
-            onClick={onClose} // close on item click (mobile UX)
+            onClick={onClose} 
             className={({ isActive }) =>
               `flex items-center gap-5 px-4 py-3 pl-4 w-full rounded-lg text-md transition-all ${
                 isActive
