@@ -7,7 +7,7 @@ const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState("Edit Profile");
 
   return (
-    <div className="p-2 md:p-8 bg-[#F5F7FA] min-h-screen px-5 ">
+    <div className="p-2 md:p-8 min-h-screen md:px-5 sm:px-1">
       <div className="bg-white rounded-2xl shadow-md p-6 md:p-8 max-w-6xl mx-auto">
       
         <div className="flex flex-wrap lg:gap-10 md:gap-4 sm:gap-2 mb-6">

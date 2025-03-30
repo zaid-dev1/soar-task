@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   BarChart,
@@ -13,14 +12,13 @@ import { weeklyActivityData } from "../data/data";
 
 const WeeklyActivityChart = () => {
   return (
-    <div className="md:w-[95%]">
-      <div className="flex justify-between items-center px-3">
+    <div className="w-full">
+      <div className="flex justify-between items-center px-2 md:px-3">
         <h2 className="text-lg font-semibold text-primary">Weekly Activity</h2>
       </div>
 
-      <div className="bg-white rounded-2xl mt-6 md:px-5 sm:px-2">
+      <div className="bg-white rounded-2xl mt-6 p-4 sm:p-3">
         <ResponsiveContainer width="100%" height={300}>
-      
           <BarChart
             data={weeklyActivityData}
             barSize={15}
@@ -58,7 +56,6 @@ const WeeklyActivityChart = () => {
             />
           </BarChart>
         </ResponsiveContainer>
-       
       </div>
     </div>
   );

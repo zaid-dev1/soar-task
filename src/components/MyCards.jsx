@@ -1,17 +1,15 @@
-
 const MyCards = () => {
   return (
     <div className="w-full ">
       <div className="flex items-center justify-between w-full pl-2 pr-8">
         <h2 className="text-lg font-semibold text-primary">My Cards</h2>
-        <span className="text-sm font-semibold text-primary cursor-pointer">
+        <span className="text-sm font-semibold text-primary cursor-pointer hover:text-[#718EBF]">
           See All
         </span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-6">
-     
-        <div className="relative bg-gradient-to-br from-[#5B5A6F] to-[#000000] text-white p-6 rounded-2xl shadow-lg flex flex-col h-52 md:w-[90%]">
+     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 w-full">
+        <div className="relative bg-gradient-to-br from-[#5B5A6F] to-[#000000] text-white p-4 rounded-2xl shadow-lg flex flex-col h-52 w-full">
           <div className="flex justify-between items-center">
             <div className="flex flex-col gap-1">
               <span className="text-xs text-gray-300 leading-none">
@@ -38,7 +36,6 @@ const MyCards = () => {
               3778 **** **** 1234
             </p>
 
-          
             <img
               src="/img11.png"
               alt="Toggle Switch"
@@ -47,9 +44,8 @@ const MyCards = () => {
           </div>
         </div>
 
-     
-        <div className="relative bg-white p-6 rounded-2xl shadow-md border border-gray-300 flex flex-col h-52 md:w-[90%]">
-          <div className="flex justify-between items-center">
+          <div className="relative bg-white p-6 rounded-2xl shadow-md border border-gray-300 flex flex-col h-52 w-full">
+         <div className="flex justify-between items-center">
             <div className="flex flex-col gap-1">
               <span className="text-xs text-gray-500 leading-none">
                 Balance
@@ -77,7 +73,6 @@ const MyCards = () => {
               3778 **** **** 1234
             </p>
 
-           
             <img
               src="/img12.png"
               alt="Toggle Switch"
