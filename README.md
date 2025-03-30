@@ -1,12 +1,57 @@
-# React + Vite
+React Profile & Dashboard App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+Follow these steps to run the project locally:
+1. Clone or Download the Project
+    Clone Or download ZIP 
+    → Click **Code** > **Download ZIP**  
+    → Extract and open the folder in your editor
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. Install Dependencies
+    npm install
 
-## Expanding the ESLint configuration
+3. Create `.env` File
+    Create a `.env` file in the root of the project with this content:
+    VITE_API_URL=https://dummyjson.com/users/2
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+4.  Start the Development Server
+    npm run dev
+
+
+This project is a modern and responsive React application featuring:
+
+- Editable user profile form with validation and mock API integration
+- Interactive dashboard with charts, cards, and recent transactions
+- Fully responsive layout for mobile and desktop
+
+
+Features
+    Edit Profile Form
+        - Fetches user data from [DummyJSON API](https://dummyjson.com/users/2)
+        - Form validation for all fields:
+        - Required fields
+        - Email format validation
+        - Password must be at least 8 characters
+        - Image upload preview on profile picture click
+        - Save button:
+        - Disabled until changes are made
+        - Shows "Saving..." while saving
+        - Disabled again after successful save
+        - Saves updated data to `localStorage` to simulate persistence
+
+    Dashboard Overview
+        The dashboard includes a dynamic and responsive layout built with Tailwind CSS.
+        Includes the following sections:
+            My Cards                 
+            Recent Transactions                  
+            Weekly Activity                    
+            Expense Statistics                
+            Quick Transfer            
+            Balance History                             
+        All dashboard sections are **mobile-first and fully responsive**.
+
+
+
+
+
+

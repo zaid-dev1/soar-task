@@ -34,7 +34,8 @@ const RecentTransactions = () => {
         </h2>
       </div>
 
-      <div className="mt-6 flex flex-col gap-4 py-4 bg-white rounded-xl shadow-md  h-52 md:w-[90%]">
+     
+      <div className="mt-6 flex flex-col gap-4 py-4 bg-white rounded-xl shadow-md h-52 w-full">
         {transactions.map((transaction) => (
           <div
             key={transaction.id}

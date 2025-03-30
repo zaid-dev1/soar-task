@@ -1,4 +1,3 @@
-
 import React from "react";
 import ReactECharts from "echarts-for-react";
 import { expenseStatisticsData } from "../data/data"; 
@@ -13,7 +12,7 @@ const ExpenseStatisticsChart = () => {
       {
         name: "Expenses",
         type: "pie",
-        radius: ["0%", "95%"], 
+        radius: ["0%", "95%"],
         avoidLabelOverlap: false,
         label: {
           show: true,
@@ -41,7 +40,7 @@ const ExpenseStatisticsChart = () => {
           selectedOffset: 20,
           itemStyle: {
             color: item.color,
-            borderWidth: 5, 
+            borderWidth: 5,
             borderColor: "#fff",
           },
         })),
@@ -55,12 +54,11 @@ const ExpenseStatisticsChart = () => {
     <div className="w-full">
       <h2 className="text-lg font-semibold text-primary">Expense Statistics</h2>
 
-      <div className="bg-white p-6 rounded-2xl mt-6 shadow-lg">
+      <div className="bg-white  mt-6 p-4  sm:p-3 rounded-2xl shadow-lg">
         <ReactECharts
           option={option}
-          style={{ height: "250px", width: "100%" }}
-        />{" "}
-    
+          style={{ height: "290px", width: "100%" }}
+        />
       </div>
     </div>
   );

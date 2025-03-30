@@ -1,53 +1,179 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
-import initialUserData from "../data/userData.json"; 
+import { toast } from "react-toastify";
+import initialUserData from "../data/userData.json";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const LOCAL_KEY = "user";
 
 const EditProfileForm = () => {
   const [user, setUser] = useState({});
+  const [originalUser, setOriginalUser] = useState({});
+  const [errors, setErrors] = useState({});
+  const [isSaving, setIsSaving] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
+  const fileInputRef = useRef(null);
 
- 
   useEffect(() => {
-    const savedUser = localStorage.getItem(LOCAL_KEY);
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    } else {
-     
-      localStorage.setItem(LOCAL_KEY, JSON.stringify(initialUserData));
-      setUser(initialUserData);
-    }
+    fetch(API_URL)
+      .then((res) => {
+        if (!res.ok) throw new Error("API error");
+        return res.json();
+      })
+      .then((data) => {
+        const userData = {
+          name: `${data.firstName} ${data.lastName}`,
+          username: data.username,
+          email: data.email,
+          password: data.password || "password123",
+          dob: data.birthDate || "",
+          presentAddress: data.address.address || "",
+          permanentAddress: data.address.city || "",
+          city: data.address.city || "",
+          postalCode: data.address.postalCode?.toString() || "",
+          country: data.address.state || "",
+          image: data.image || "/profile.jpg",
+        };
+        setUser(userData);
+        setOriginalUser(userData);
+        localStorage.setItem(LOCAL_KEY, JSON.stringify(userData));
+      })
+      .catch(() => {
+        const savedUser = localStorage.getItem(LOCAL_KEY);
+        if (savedUser) {
+          const parsed = JSON.parse(savedUser);
+          setUser(parsed);
+          setOriginalUser(parsed);
+        } else {
+          setUser(initialUserData);
+          setOriginalUser(initialUserData);
+        }
+      });
   }, []);
 
-
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    const updated = { ...user, [e.target.name]: e.target.value };
+    setUser(updated);
+    setErrors({ ...errors, [e.target.name]: "" });
+    setHasChanges(JSON.stringify(updated) !== JSON.stringify(originalUser));
   };
 
-  
+  const validate = () => {
+    const requiredFields = [
+      "name",
+      "username",
+      "email",
+      "password",
+      "dob",
+      "presentAddress",
+      "permanentAddress",
+      "city",
+      "postalCode",
+      "country",
+    ];
+
+    let tempErrors = {};
+    requiredFields.forEach((field) => {
+      if (!user[field] || user[field].trim() === "") {
+        tempErrors[field] = "This field is required.";
+      }
+    });
+
+    if (user.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)) {
+      tempErrors.email = "Invalid email format.";
+    }
+
+    if (user.password && user.password.length < 8) {
+      tempErrors.password = "Password must be at least 8 characters.";
+    }
+
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
+
   const handleSave = () => {
-    localStorage.setItem(LOCAL_KEY, JSON.stringify(user));
-    alert("User data saved!");
+    if (!validate()) return;
+    setIsSaving(true);
+
+    const [firstName, ...rest] = user.name.split(" ");
+    const lastName = rest.join(" ");
+
+    const updatedData = {
+      firstName,
+      lastName,
+      username: user.username,
+      email: user.email,
+      password: user.password,
+      birthDate: user.dob,
+      address: {
+        address: user.presentAddress,
+        city: user.city,
+        postalCode: user.postalCode,
+        state: user.country,
+      },
+    };
+
+    fetch(API_URL, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedData),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        toast.success("User updated successfully!");
+        setOriginalUser(user);
+        setHasChanges(false);
+        localStorage.setItem(LOCAL_KEY, JSON.stringify(user));
+      })
+      .catch(() => {
+        toast.error("Failed to update user via API.");
+      })
+      .finally(() => {
+        setIsSaving(false);
+      });
+  };
+
+  const handleImageClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      const updatedUser = { ...user, image: imageUrl };
+      setUser(updatedUser);
+      setHasChanges(true);
+    }
   };
 
   return (
     <div className="mt-6 px-6 w-full">
       <div className="flex flex-col md:flex-row items-center md:items-start gap-10 md:gap-15">
-      
         <div className="flex flex-col items-center">
           <div className="relative w-24 h-24">
             <img
               src={user.image || "/profile.jpg"}
               alt="Profile"
-              className="w-24 h-24 rounded-full object-cover"
+              onClick={handleImageClick}
+              className="w-24 h-24 rounded-full object-cover cursor-pointer"
             />
-            <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-black flex items-center justify-center cursor-pointer">
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+            />
+            <div
+              onClick={handleImageClick}
+              className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-black flex items-center justify-center cursor-pointer"
+            >
               <FiEdit2 className="text-white text-sm" />
             </div>
           </div>
         </div>
 
- 
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 flex-1">
           {[
             { label: "Your Name", name: "name" },
@@ -70,8 +196,15 @@ const EditProfileForm = () => {
                 name={name}
                 value={user[name] || ""}
                 onChange={handleChange}
-                className="w-full text-sm text-[#718EBF] px-4 py-2 rounded-xl border border-[#DFEAF2] focus:outline-none focus:ring-2 focus:ring-[#343C6A]"
+                className={`w-full text-sm text-[#718EBF] px-4 py-2 rounded-xl border ${
+                  errors[name] ? "border-red-500" : "border-[#DFEAF2]"
+                } focus:outline-none focus:ring-2 ${
+                  errors[name] ? "focus:ring-red-500" : "focus:ring-[#343C6A]"
+                }`}
               />
+              {errors[name] && (
+                <p className="text-red-500 text-xs mt-1">{errors[name]}</p>
+              )}
             </div>
           ))}
         </div>
@@ -79,10 +212,15 @@ const EditProfileForm = () => {
 
       <div className="mt-8 flex justify-center md:justify-end">
         <button
-          className="bg-black text-white text-sm w-full md:w-auto md:px-15 px-6 py-2 rounded-xl hover:bg-gray-900"
+          disabled={!hasChanges || isSaving}
           onClick={handleSave}
+          className={`text-sm w-full md:w-auto md:px-15 px-6 py-2 rounded-xl transition-all duration-300 ${
+            !hasChanges || isSaving
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-black hover:bg-primary"
+          } text-white`}
         >
-          Save
+          {isSaving ? "Saving..." : "Save"}
         </button>
       </div>
     </div>
@@ -90,3 +228,5 @@ const EditProfileForm = () => {
 };
 
 export default EditProfileForm;
+
+

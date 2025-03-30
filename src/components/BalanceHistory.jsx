@@ -16,9 +16,7 @@ const BalanceHistory = () => {
       <div className="flex justify-between items-center px-3">
         <h2 className="text-lg font-semibold text-primary">Balance History</h2>
       </div>
-
-      
-      <div className="bg-white rounded-2xl mt-6 p-4 sm:px-5 px-2 w-full">
+        <div className="bg-white rounded-2xl mt-6 p-4 w-full">
         <ResponsiveContainer
           width="100%"
           height={240}
