@@ -27,24 +27,25 @@ const menuItems = [
 import { IoClose } from "react-icons/io5";
 const Sidebar = ({ isOpen, onClose }) => {
   return (
+    //   <div
+    //     className={`fixed top-0 left-0 w-64 h-screen bg-white shadow-md z-50 transform transition-transform duration-300
+    // ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+    //   >
     <div
       className={`fixed top-0 left-0 w-64 h-screen bg-white shadow-md z-50 transform transition-transform duration-300
-  ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+    ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
     >
-     
       <div className="flex items-center justify-between py-6 px-4 md:justify-center md:gap-3">
         <div className="flex items-center gap-3">
           <img src="/logo.svg" alt="Logo" className="w-8 h-8 mb-2" />
           <h1 className="text-2xl font-extrabold text-primary">Soar Task</h1>
         </div>
 
-    
         <button onClick={onClose} className="md:hidden text-gray-500 text-xl">
           <IoClose />
         </button>
       </div>
 
-    
       <div className="flex flex-col w-full gap-1 mt-4 px-4">
         {menuItems.map((item, index) => (
           <NavLink

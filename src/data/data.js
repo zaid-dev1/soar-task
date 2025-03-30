@@ -23,13 +23,13 @@ export const expenseStatisticsData = [
   },
 
   {
-    value: 17,
+    value: 19,
     name: "Bill Expense",
     color: "#FC7900",
     borderWidth: 6,
   },
   {
-    value: 35,
+    value: 33,
     name: "Others",
     color: "#232323",
     borderWidth: 6,
@@ -40,19 +40,19 @@ export const quickTransferData = [
     name: "Livia Bator",
     role: "CEO",
     image: "/ceo.png",
-    fontWeight: "bolder",
+  
   },
   {
     name: "Randy Press",
     role: "Director",
     image: "director.png",
-    fontWeight: "normal",
+ 
   },
   {
     name: "Workman",
     role: "Designer",
     image: "designer.png",
-    fontWeight: "normal",
+  
   },
 ];
 

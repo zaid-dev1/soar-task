@@ -13,7 +13,7 @@ const EditProfileForm = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const fileInputRef = useRef(null);
-
+const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     fetch(API_URL)
       .then((res) => {
@@ -48,9 +48,18 @@ const EditProfileForm = () => {
           setUser(initialUserData);
           setOriginalUser(initialUserData);
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
-
+if (isLoading) {
+  return (
+    <div className="flex justify-center items-center h-64">
+      <div className="w-8 h-8 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
+    </div>
+  );
+}
   const handleChange = (e) => {
     const updated = { ...user, [e.target.name]: e.target.value };
     setUser(updated);
